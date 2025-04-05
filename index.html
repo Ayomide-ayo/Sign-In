@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(
+          rgba(255, 255, 255, 0.8),
+          rgba(255, 255, 255, 0.8)
+        ),
+        url('https://i.pinimg.com/originals/80/43/68/804368b82aa29d3dfb5c58047d185ef6.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .container {
+      max-width: 700px;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      margin: 30px auto;
+      backdrop-filter: blur(3px);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ff66a6;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .checkbox-container input {
+      margin-right: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(to right, #ff66a6, #ffcc70);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      margin-top: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: #ffe4ec;
+      color: #ff4081;
+    }
+
+    tr:hover {
+      background-color: #fff9f9;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .btn-group button {
+      padding: 10px 16px;
+      min-width: 130px;
+      border: none;
+      border-radius: 8px;
+      /* background: linear-gradient(135deg, #6a11cb, #2575fc); */
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      /* transition: transform 0.2s ease, background 0.3s ease; */
+      white-space: nowrap;
+    }
+    .agreed-btn {
+      background: linear-gradient(135deg, #28a745, #218838);
+    }
+    .disagreed-btn {
+      background: linear-gradient(135deg, #dc3545, #c82333);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Sign Up</h2>
+    <form action="">
+      <div>
+        <label for="">First Name</label>
+        <input type="text" id="first">
+      </div>
+      <div>
+        <label for="">Second Name</label>
+        <input type="text" id="second">
+      </div>
+      <div>
+        <label for="">Email</label>
+        <input type="email" id="email">
+      </div>
+      <div>
+        <label for="">Password</label>
+        <input type="password" id="password">
+      </div>
+      <div>
+        <label for="">Confirm Password</label>
+        <input type="password" id="confirmPassword">
+      </div>
+      <input type="checkbox" name="" id="checkbox"> Agree to our terms and condition
+      <button type="button"  onclick="signUp()">Sign in</button>
+    </form>
+    <div class="btn-group">
+      <button type="button" class="agreed-btn" onclick="display(allInputs)">All Users</button>
+      <button type="button" class="agreed-btn" onclick="displayAgreedUsers()">Agreed Users</button>
+      <button type="button" class="disagreed-btn" onclick="displayDisagreedUsers()">Disagreed Users</button>
+    </div>
+    <div>
+      <table>
+        <thead>
+          <th>S/N</th>
+          <th>First name</th>
+          <th>Second name</th>
+          <th>Email</th>
+          <th>Checked</th>
+        </thead>
+        <tbody id="tbody">
+          <tr>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  
+  
+</body>
+</html>
+<script>
+  let allInputs = JSON.parse(localStorage.getItem('Users Data')) || []
+  let firstName = document.getElementById('first')
+  let secondName = document.getElementById('second')
+  let email = document.getElementById('email')
+  let password = document.getElementById('password')
+  let confirmPass = document.getElementById('confirmPassword')
+  let myCheckbox = document.getElementById('checkbox')
+  let tbody = document.getElementById('tbody')
+
+  function signUp() {
+      let input1 = firstName.value.trim().toLowerCase()
+      let input2 = secondName.value.trim().toLowerCase()
+      let input3 = email.value.trim().toLowerCase()
+      let input4 = password.value.trim()
+      let input5 = confirmPass.value.trim() 
+
+      // console.log(isChecked);
+      
+
+       if (!input1 || !input2 || !input3 || !input4 === '') {
+        alert('all fields are mandatory')
+        
+      } else if(input4.length < 5){
+        alert('Pasword must not be more than 5')
+
+      } else if (input4 !== input5) {
+        alert('password does not match')
+
+      } else if(allInputs.find((userObject) => userObject.email === input3) ){
+        alert('User already exist')
+
+      } else {
+        let userObject = {
+          firstname: firstName.value,
+          secondname: secondName.value,
+          email: email.value,
+          isChecked: myCheckbox.checked 
+        }
+
+        allInputs.push(userObject)
+        localStorage.setItem('User Data', JSON.stringify(allInputs))
+        console.log(userObject);
+        
+      }
+      display(allInputs)
+  }
+
+  function display(user) {
+    tbody.innerHTML = ''
+    user.forEach((users, i) => {
+        return tbody.innerHTML += `<tr>
+        <td>${i + 1}</td>
+        <td>${users.firstname}</td>
+        <td>${users.secondname}</td>
+        <td>${users.email}</td>
+        <td>${users.isChecked}</td>
+       </tr> `
+    })
+    console.log(user, 'on line 116');
+    
+  }
+  // display agreed and disagreed users
+  function displayAgreedUsers() {
+    let agreedUsers = allInputs.filter((userObject) => {
+        return userObject.isChecked === true
+       agreedUsers()
+    })
+    console.log(agreedUsers);
+    display(agreedUsers)
+  }
+
+  function displayDisagreedUsers() {
+    let disAgreedUsers = allInputs.filter((userObject) => {
+        return userObject.isChecked === false
+       disAgreedUsers()
+    })
+    console.log(disAgreedUsers);
+    display(disAgreedUsers)
+  }
+  
+
+  // sign up page 
+    // email // email should be unique
+    // full name 
+    // password
+    // checkbox agree to terms and conditions
+    // confirm password must match . all fields must be filled
+    // user sign up should enter a table 
+</script>
