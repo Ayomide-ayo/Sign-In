@@ -148,7 +148,7 @@
         <input type="password" id="confirmPassword">
       </div>
       <input type="checkbox" name="" id="checkbox"> Agree to our terms and condition
-      <button type="button"  onclick="signUp()">Sign in</button>
+      <button type="button" onclick="signUp()">Sign in</button>
     </form>
     <div class="btn-group">
       <button type="button" class="agreed-btn" onclick="display(allInputs)">All Users</button>
@@ -204,7 +204,7 @@
       } else if (input4 !== input5) {
         alert('password does not match')
 
-      } else if(allInputs.find((userObject) => userObject.email === input3)){
+      } else if(allInputs.find((userObject) => userObject.email === input3)){ // the find callback function can be any variable or any parameter. it called an explicit return but if you have curly braces you must have return
         alert('User already exist')
 
       } else {
@@ -216,6 +216,7 @@
         }
 
         allInputs.push(userObject)
+        alert('Sign Up successful')
         localStorage.setItem('User Data', JSON.stringify(allInputs))
         console.log(userObject);
         
@@ -264,4 +265,5 @@
     // checkbox agree to terms and conditions
     // confirm password must match . all fields must be filled
     // user sign up should enter a table 
+    // codepen.io for html and css designs
 </script>
