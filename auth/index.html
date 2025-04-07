@@ -148,7 +148,7 @@
         <input type="password" id="confirmPassword">
       </div>
       <input type="checkbox" name="" id="checkbox"> Agree to our terms and condition
-      <button type="button" onclick="signUp()">Sign in</button>
+      <button id="myButton" type="button" onclick="signUp()">Sign in</button>
     </form>
     <div class="btn-group">
       <button type="button" class="agreed-btn" onclick="display(allInputs)">All Users</button>
@@ -176,7 +176,7 @@
 </body>
 </html>
 <script>
-  let allInputs = JSON.parse(localStorage.getItem('Users Data')) || []
+  let inputs = JSON.parse(localStorage.getItem('UserData')) || []
   let firstName = document.getElementById('first')
   let secondName = document.getElementById('second')
   let email = document.getElementById('email')
@@ -185,48 +185,63 @@
   let myCheckbox = document.getElementById('checkbox')
   let tbody = document.getElementById('tbody')
 
-  function signUp() {
-      let input1 = firstName.value.trim().toLowerCase()
-      let input2 = secondName.value.trim().toLowerCase()
-      let input3 = email.value.trim().toLowerCase()
-      let input4 = password.value.trim()
-      let input5 = confirmPass.value.trim() 
 
-      // console.log(isChecked);
+      // myButton.disabled = true
+
+  function signUp() {
+      myButton.innerHTML = 'Loading...'
+      myButton.disabled = true
+        
+        setTimeout(() => {
+          let input1 = firstName.value.trim().toLowerCase()
+          let input2 = secondName.value.trim().toLowerCase()
+          let input3 = email.value.trim().toLowerCase()
+          let input4 = password.value.trim()
+          let input5 = confirmPass.value.trim() 
+
+          if (!input1 || !input2 || !input3 || !input4 === '') {
+            alert('all fields are mandatory')
+            
+          } else if(input4.length > 5){
+            alert('Pasword must not be more than 5')
+
+          } else if (input4 !== input5) {
+            alert('password does not match')
+
+          } else if(inputs.find((userObject) => userObject.email === input3)){ // the find callback function can be any variable or any parameter. it called an explicit return but if you have curly braces you must have return
+            alert('User already exist')
+
+          } else {
+            let userObject = {
+              firstname: firstName.value,
+              secondname: secondName.value,
+              email: email.value,
+              password: password.value,
+              isChecked: myCheckbox.checked 
+            }
+
+            inputs.push(userObject)
+            alert('Sign Up successful')
+            localStorage.setItem('UserData', JSON.stringify(inputs))
+            window.location.href = 'login.html'
+            
+          }
+          
+          myButton.innerText = 'Sign In'
+          myButton.disabled = false
+
+
+        }, 3000)
       
 
-       if (!input1 || !input2 || !input3 || !input4 === '') {
-        alert('all fields are mandatory')
-        
-      } else if(input4.length > 5){
-        alert('Pasword must not be more than 5')
 
-      } else if (input4 !== input5) {
-        alert('password does not match')
-
-      } else if(allInputs.find((userObject) => userObject.email === input3)){ // the find callback function can be any variable or any parameter. it called an explicit return but if you have curly braces you must have return
-        alert('User already exist')
-
-      } else {
-        let userObject = {
-          firstname: firstName.value,
-          secondname: secondName.value,
-          email: email.value,
-          isChecked: myCheckbox.checked 
-        }
-
-        allInputs.push(userObject)
-        alert('Sign Up successful')
-        localStorage.setItem('User Data', JSON.stringify(allInputs))
-        console.log(userObject);
-        
-      }
-      display(allInputs)
+        display(allInputs)
+      
   }
 
   function display(user) {
     tbody.innerHTML = ''
-    user.forEach((users, i, arr) => {
+    user.forEach((users, i, arr) => {  // for each is just a regular loop
         return tbody.innerHTML += `<tr>
         <td>${i + 1}</td>
         <td>${users.firstname}</td>
@@ -240,7 +255,7 @@
   }
   // display agreed and disagreed users
   function displayAgreedUsers() {
-    let agreedUsers = allInputs.filter((userObject) => {
+    let agreedUsers = inputs.filter((userObject) => {
         return userObject.isChecked === true
        agreedUsers()
     })
@@ -249,7 +264,7 @@
   }
 
   function displayDisagreedUsers() {
-    let disAgreedUsers = allInputs.filter((userObject) => {
+    let disAgreedUsers = inputs.filter((userObject) => {
         return userObject.isChecked === false
        disAgreedUsers()
     })
@@ -266,4 +281,7 @@
     // confirm password must match . all fields must be filled
     // user sign up should enter a table 
     // codepen.io for html and css designs
+    // sum and every returns a boolean.  sum - it finds a least one person that meets the array and every checks if everybody meet the array and return true 
+
+    // explicts or normal return
 </script>

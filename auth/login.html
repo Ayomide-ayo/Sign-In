@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <style>
+    body {
+      background: #f8f6f2;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 2rem 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1.2rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(to right, #ff66a6, #ffcc70);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      margin-top: 20px;
+    }
+    .footer {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .footer a {
+      color: #000;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Welcome Back</h2>
+    <label for="email">Email Address</label>
+    <input type="email" id="email" placeholder="you@example.com" required />
+
+    <label for="password">Password</label>
+    <input type="password" id="password" placeholder="Enter password" required />
+
+    <button id="myButton" onclick="login()">Login</button>
+
+    <div class="footer">
+      Don't have an account? <a href="index.html">Sign up</a>
+    </div>
+  </div>
+
+</body>
+</html>
+<script>
+  // you have to make sure the person logging in must be in your database
+  // check for the user alone 
+  // be specific about your error and find them one by one  
+  let inputs = JSON.parse(localStorage.getItem('UserData'))
+
+  function login() {
+    myButton.innerHTML = 'Loading...'
+    myButton.disabled = true
+
+
+    setTimeout(() => {
+
+          let foundUser = inputs.find((user) => {
+          return user.email === email.value.trim()
+        })
+
+            if (!foundUser) {
+              alert('User does not exist')
+            } else {
+            if (foundUser.password === password.value.trim()) {
+              alert('Login Successful')
+              window.location.href = 'dashboard.html'
+              let index = inputs.findIndex((user) => {return user.email === foundUser.email} )
+              localStorage.setItem('loggedInUser', index)
+            } else {
+              alert('Invalid Email or Password')
+            }
+        }
+
+        myButton.innerHTML = 'Login'
+        myButton.disabled = false
+
+
+    }, 3000)
+
+    
+  }
+
+
+
+  // assignment - welcome the particular person, only when the user logged in you cant log  
+</script>

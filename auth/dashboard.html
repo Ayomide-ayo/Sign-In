@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #fdf6e3, #f9f1d6);
+      color: #2c2c2c;
+    }
+
+    header {
+      background-color: #fff7cc;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #e5c100;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      color: #d4af37;
+    }
+
+    .username {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    main {
+      padding: 2rem;
+    }
+
+    .section {
+      margin-bottom: 2rem;
+      background: #ffffff;
+      padding: 1.5rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .section h2 {
+      color: #8a6d1f;
+      margin-bottom: 1rem;
+    }
+
+    .anime-card {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+    }
+
+    .anime-card img {
+      border-radius: 12px;
+      width: 180px;
+      height: 260px;
+      object-fit: cover;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .anime-card img:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+      color: #999;
+    }
+
+    .ghibli-tag {
+      font-size: 1.2rem;
+      color: #5c4033;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>👑 Yoruba Royal Dashboard</h1>
+    <div class="username">Welcome, <span id="username">Guest</span></div>
+  </header>
+
+  <main>
+    <div class="section">
+      <h2>Your Royal Journey Begins 🌟</h2>
+      <p>Explore your digital kingdom, track your airtime, manage your legacy, and stay connected with the stories that inspire greatness.</p>
+    </div>
+
+    <div class="section">
+      <h2>Anime Picks for You 🎌</h2>
+      <div class="anime-card">
+        <img src="https://cdn.myanimelist.net/images/anime/10/47347.jpg" alt="Naruto">
+        <img src="https://cdn.myanimelist.net/images/anime/1208/94745.jpg" alt="Demon Slayer">
+        <img src="https://cdn.myanimelist.net/images/anime/4/19644.jpg" alt="Attack on Titan">
+        <img src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" alt="One Piece">
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Studio Ghibli Vibes 🌿</h2>
+      <p class="ghibli-tag">“Life is suffering. It is hard. The world is cursed. But still, you find reasons to keep living.” — Princess Mononoke</p>
+      <div class="anime-card">
+        <img src="https://www.ghibli.jp/gallery/chihiro001.jpg" alt="Spirited Away">
+        <img src="https://www.ghibli.jp/gallery/mononoke001.jpg" alt="Princess Mononoke">
+        <img src="https://www.ghibli.jp/gallery/totoro001.jpg" alt="My Neighbor Totoro">
+        <img src="https://www.ghibli.jp/gallery/howl001.jpg" alt="Howl’s Moving Castle">
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 Yoruba Royal Dashboard • All rights reserved.
+  </footer>
+</body>
+</html>
+<script>
+  // set timeout is in milliseconds. and it can be used to create a delay 
+  let inputs = JSON.parse(localStorage.getItem('UserData'))
+  let index = localStorage.getItem('loggedInUser')
+  let currentUser = inputs[index]
+
+  console.log(index);
+  console.log(inputs);
+  
+  console.log(currentUser.firstname);
+  
+  username.innerHTML = currentUser.firstname
+
+</script>
