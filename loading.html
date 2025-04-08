@@ -1,29 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #fffdf5, #fff8e1);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .signup-container {
+      background: white;
+      padding: 2rem 2.5rem;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #b89c2f;
+    }
+
+    label {
+      font-weight: 600;
+      color: #444;
+      display: block;
+      margin-bottom: 0.4rem;
+      margin-top: 1rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: border 0.2s ease;
+    }
+
+    input:focus {
+      border-color: #e0b600;
+      outline: none;
+    }
+
+    .error {
+      color: crimson;
+      font-size: 0.85rem;
+      margin-top: 0.3rem;
+      display: none;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.75rem;
+      background: gold;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 1rem;
+      color: #000;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .note {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .note a {
+      color: #b89c2f;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-      <div>
-        <input type="text" id="input1" oninput="check()">
-      </div>
-      <div>
-        <input type="password" id="password" oninput="check()">
-      </div>
-      <div>
-        <input type="password" id="confirmPassword" oninput="check()">
-      </div>
+  <div class="signup-container">
+    <h2>Create Account</h2>
+
+    <label for="input1">Username</label>
+    <input type="text" id="input1" oninput="check()" />
+
+    <label for="password">Password</label>
+    <input type="password" id="password" oninput="check()"/>
+
+    <label for="confirmPassword">Confirm Password</label>
+    <input type="password" id="confirmPassword" oninput="check()" />
+    <div id="error" class="error" style="color: crimson;">Passwords do not match</div>
+
+    <button id="theButton" onclick="showLoading()">Click me</button>
+
+    <div class="note">
+      Already have an account? <a href="login.html">Login</a>
     </div>
-
-
-  <button onclick="showLoading()">Click me</button>
+  </div>
 </body>
 </html>
 <script>
     let input1 = document.getElementById('input1')
-    let input2 = document.getElementById('input2')
-    let input3 = document.getElementById('input3')
+    let input2 = document.getElementById('password')
+    let input3 = document.getElementById('confirmPassword')
+    let theButton = document.getElementById("theButton")
+    theButton.disabled = true
+
+    function showLoading() {
+    
+
+      forButton()
+
+        theButton.innerHTML = 'Loading...'
+      theButton.disabled = true
+
+      setTimeout(() => {
+        theButton.disabled = false
+        alert('Sign in successful')
+        theButton.innerHTML = 'Click me'
+      }, 3000)
+    }
+
+    function check() {
+      if (input2.value.trim() !== input3.value.trim()) {
+        error.style.display = 'block'
+      } else {
+        error.style.display = 'none'
+      }
+
+      forButton()
+
+
+    
+      
+    }
+
+    function forButton() {
+        if (input1.value.trim() && input2.value.trim() && input3.value.trim() && (input2.value.trim() === input3.value.trim())) {
+          theButton.disabled = false
+        } else {
+          theButton.disabled = true
+        }
+      }
+
+    
+    
 </script>

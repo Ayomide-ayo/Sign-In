@@ -110,9 +110,10 @@
             } else {
             if (foundUser.password === password.value.trim()) {
               alert('Login Successful')
-              window.location.href = 'dashboard.html'
               let index = inputs.findIndex((user) => {return user.email === foundUser.email} )
               localStorage.setItem('loggedInUser', index)
+              window.location.href = 'dashboard.html'
+              
             } else {
               alert('Invalid Email or Password')
             }

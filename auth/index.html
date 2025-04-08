@@ -121,6 +121,15 @@
     .disagreed-btn {
       background: linear-gradient(135deg, #dc3545, #c82333);
     }
+    .error {
+      color: crimson;
+      font-size: 0.85rem;
+      margin-bottom: 10px; 
+      display: none;
+    }
+    #error{
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -141,12 +150,13 @@
       </div>
       <div>
         <label for="">Password</label>
-        <input type="password" id="password">
+        <input type="password" id="password" onclick="check()">
       </div>
       <div>
         <label for="">Confirm Password</label>
-        <input type="password" id="confirmPassword">
+        <input type="password" id="confirmPassword" onclick="check()">
       </div>
+      <div id="error" class="error" style="color: crimson;">Passwords do not match</div>
       <input type="checkbox" name="" id="checkbox"> Agree to our terms and condition
       <button id="myButton" type="button" onclick="signUp()">Sign in</button>
     </form>
@@ -226,7 +236,7 @@
             window.location.href = 'login.html'
             
           }
-          
+
           myButton.innerText = 'Sign In'
           myButton.disabled = false
 
@@ -238,6 +248,13 @@
         display(allInputs)
       
   }
+      function check() {
+        if (password !== confirmPass) {
+          error.style.display = 'block'
+        } else {
+          error.style.display = 'none'
+        }
+      }
 
   function display(user) {
     tbody.innerHTML = ''
