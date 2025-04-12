@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+
+    nav.mynav {
+      background-color: #333;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      /* position: fixed; */
+    }
+
+    .secNav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      /* position: fixed; */
+    }
+
+    .secNav img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .btns button {
+      margin-left: 10px;
+      padding: 8px 12px;
+      background-color: #ff5c5c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #makePost {
+      max-width: 600px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    #makePost input[type="text"],
+    #makePost input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    #makePost img {
+      display: block;
+      margin: 10px 0;
+    }
+
+    #makePost button {
+      padding: 10px 20px;
+      background-color: #2c8c99;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #display {
+      margin-top: 30px;
+    }
+
+    #display div {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    #display img {
+      max-width: 100px;
+      height: auto;
+      display: block;
+      margin-top: 10px;
+    }
+
+    #display button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      background-color: #ddd;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp3oYa9BljpcyhfIwVizBrEuo4HjsWq1mNzw&s" alt=""> -->
+    <!-- <div class="container">
+      <p>Welcome,  <span id="username"></span></p>
+    </div> -->
+    <!-- Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi atque ea vitae! Quaerat qui, sunt dignissimos cum doloremque laboriosam eius alias incidunt delectus ratione quo omnis voluptas blanditiis sequi quod! -->
+</body>
+</html>
+<script>
+  // set timeout is in milliseconds. and it can be used to create a delay 
+ 
+  let inputs = JSON.parse(localStorage.getItem('UserData'))
+  let index = localStorage.getItem('loggedInUser')
+  let currentUser = inputs[index]
+  let userBlogKey = `${currentUser.email}_blogs`
+  let postB = JSON.parse(localStorage.getItem(userBlogKey)) || []
+  let preview = document.getElementById('display')
+  // let likedButton = document.getElementById('like')
+
+
+
+
+  if (!index) {
+    alert('unauthorized')
+    document.body.innerHTML = 'Loading...'
+    window.location.href = 'login.html'
+  } else {
+    document.body.innerHTML = `<div>
+      <nav class="mynav">
+        <div class="secNav">
+        <img src="${!currentUser.picturePath ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp3oYa9BljpcyhfIwVizBrEuo4HjsWq1mNzw&' : currentUser.picturePath}" alt="">
+       
+        <p>Welcome, ${currentUser.firstname}</p>
+          
+        </div>
+      <div class="btns">
+        <button onclick="changeProfile()">Edit profile</button>
+       <button onclick="logOut()">Log out</button>\
+       </div>
+       </nav> 
+    </div>
+    
+    <div id="makePost">
+      
+      <input type="text" placeholder="Title" id="title" />
+      <input type="text" placeholder="description" id="description" />
+      <input type="file" id="myFile" onchange="pickPicture()" accept=".jpg,.png" />
+      <img id="image" width="50" height="50" /> 
+      <button onclick="postBlog()">Post</button> 
+      <div id="display">
+
+        </div> 
+      </div>
+    
+    `
+
+  }
+    
+    function logOut() {
+      localStorage.removeItem('loggedInUser')
+      alert('Log out successful')
+      window.location.href = 'login.html'
+    }
+
+    function pickPicture() {
+      let inputFile = document.getElementById('myFile') // input element
+      console.log(inputFile);
+      let file = inputFile.files[0] // file object
+
+      let myReader = new FileReader()
+
+      if (!file) {
+        alert('Can\'t read files')
+
+      } else {
+        myReader.readAsDataURL(file)
+      }
+
+      myReader.addEventListener('load', (event) => { // the space taking the event can take any parameter it is just a naming convention 
+        let result = event.target.result
+        image.src = result
+        
+        console.log(image.innerHTML, 'on line 99');
+        
+        console.log(result);
+
+      })
+
+   
+      
+    }
+    
+    function postBlog(){
+      let title = document.getElementById('title')
+      let description = document.getElementById('description')
+      let image = document.getElementById('image')
+      let result = image.src
+    
+
+
+      if (title.value.trim() === "" || description.value.trim() === "") {
+        alert('Please input a value')
+
+      } else {
+        let allBlog = {
+          title: title.value,
+          description: description.value,
+          image: result,
+          liked: false  
+        } 
+        postB.push(allBlog)
+        console.log(postB);
+        localStorage.setItem(userBlogKey, JSON.stringify(postB))
+       
+      }
+
+      displayBlog(postB)
+      alert("Post created successfully!")
+
+
+      title.value =""
+      description.value = ""
+      image.src = ""
+    }
+    
+
+    function displayBlog(blog) {
+      let preview = document.getElementById('display')
+      preview.innerHTML = ''
+      blog.forEach((blogs, i, arr) => {
+        return preview.innerHTML += `<div>
+          <h1>${blogs.title}</h1>
+          <p>${blogs.description}</p>
+         <img src="${blogs.image}" width="100" height="100" />     
+          <button id="like-${i}">Like</button>    
+          </div>`
+      })
+
+      blog.forEach((blogPost, i) => {
+        let likedButton = document.getElementById(`like-${i}`)
+        likedButton.addEventListener('click', () => {
+            let blogPost = postB[i]
+
+            if (blogPost.liked) {
+                blogPost.liked = false
+                likedButton.style.backgroundColor = 'red'
+                likedButton.style.color = 'white'
+                likedButton.innerHTML = 'Not liked'
+            } else {
+                blogPost.liked = true
+                likedButton.style.backgroundColor = 'green'
+                likedButton.style.color = 'black'
+                likedButton.innerHTML = 'Liked'
+            }
+            localStorage.setItem(userBlogKey, JSON.stringify(postB))
+        })
+    })
+}
+
+
+    function changeProfile() {
+      window.location.href = 'changeProf.html'
+    }
+  
+
+    // function likeButton() {
+    //   let likedButton = document.getElementById('like')
+    //   let liked = false
+    //   likedButton.addEventListener('click', () => {
+    //     // likedButton.style.backgroundColor = 'green'
+    //     // likedButton.style.color = 'black'
+
+    //     // console.log(likedButton, 'Button is working');
+    //     if (likedButton.liked) {
+    //       likedButton.style.backgroundColor = 'green'
+    //       likedButton.style.color = 'black'
+    //       likedButton.innerHTML = 'Liked'
+
+    //     } else if(!likedButton.liked){
+    //       likedButton.style.backgroundColor = 'red'
+    //       likedButton.style.color = 'white'
+    //       likedButton.innerHTML = 'Not liked'
+
+    //     } else{
+    //       console.log('its not working');
+          
+    //     }
+        
+    //   }) 
+      
+
+    // }
+    console.log(displayBlog(postB), 'on line 134');
+    
+  
+  // console.log(index);
+  // console.log(inputs);
+  
+  // console.log(currentUser.firstname);
+  
+  // username.innerHTML = currentUser.firstname
+
+  // dom manipulation
+  // onchange is once a change happens it works up for what you want to chnage. and onchange can be used for input type file 
+  // use input.file to grab your file. give us the value attributed to that input file 
+  // add event listener is to add an event in javascript 
+  // ASSIGNMENT - FINE CARD HERE AND YOU SHOULD BE ABLE TO POST THE PICTURE    
+
+</script>

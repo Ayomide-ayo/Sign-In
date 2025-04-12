@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text" id="input1">
+  <button onclick="clickMe()">Click</button>
+
+  <button onclick="tryClick(event)">You haven't clicked me</button>
+  <button ondblclick="click(event)">click</button>
+</body>
+</html>
+<script>
+  // if you want to set things every 3 seconds you need set interval. with set interval you can time what you want to do 
+  //difference between a loop and a set interval is that a loop you cant time it but set interval you can time it
+  let theInput = document.getElementById('input1')
+  // let num = theInput.value
+
+  function clickMe() {
+    let numReduction = setInterval(() => {
+      let num = theInput.value
+      num--
+      theInput.value = num
+      if (num === 0) {
+        alert('Time out')
+        clearInterval(numReduction)
+      } else {
+        console.log('its not working');
+        
+      }
+    }, 1000);
+   
+    
+  }
+  
+  // setInterval(() => { // give it a variable name 
+  //   document.body.style.backgroundColor = generateRandomRgbColors()
+  // }, 3000); // set interval keeps running until you tell it to stop
+
+  // function generateRandomRgbColors(){
+    
+  //   let picker = Math.floor(Math.random() * 256)
+  //   let picker2 = Math.floor(Math.random() * 256)
+  //   let picker3 = Math.floor(Math.random() * 256)
+   
+  //   return `rgb(${picker}, ${picker2}, ${picker3})`
+   
+    
+  // }
+  // console.log(generateRandomRgbColors());
+
+
+  // we send events as arguments to functions 
+  // event.target will give you access to the button itsef or the div itself 
+  // events makes your life easier  
+
+  // liked/unlike and profile picture   
+  
+</script>

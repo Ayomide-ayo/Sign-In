@@ -112,7 +112,7 @@
               alert('Login Successful')
               let index = inputs.findIndex((user) => {return user.email === foundUser.email} )
               localStorage.setItem('loggedInUser', index)
-              window.location.href = 'dashboard.html'
+              window.location.href = 'blog.html'
               
             } else {
               alert('Invalid Email or Password')

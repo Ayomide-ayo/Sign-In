@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="file" id="myProfile" onchange="profileChange()" accept=".jpg,.png">
+  <img width="100" height="100" id="image">
+  <button onclick="changePic()">Change Picture</button>
+  
+</body>
+</html>
+<script>
+  let inputs = JSON.parse(localStorage.getItem('UserData'))
+  let index = localStorage.getItem('loggedInUser')
+  let currentUser = inputs[index]
+
+  function profileChange() {
+    let myProfile = document.getElementById('myProfile')
+    let profileFile = myProfile.files[0]
+
+    let myImage = new FileReader()
+
+
+    if (!profileFile) {
+        alert('Please select an image ')
+
+      } else {
+        myImage.readAsDataURL(profileFile)
+      }
+
+      myImage.addEventListener('load', (event) => { // the space taking the event can take any parameter it is just a naming convention 
+        let result = event.target.result
+        image.src = result        
+       
+        console.log(result);
+
+      })
+
+
+  }
+
+  function changePic() {
+    let image = document.getElementById('image')
+
+    if (!image) {
+      alert('No image selected')
+      
+    }
+    currentUser.picturePath = image.src
+    inputs[index] = currentUser
+
+    localStorage.setItem('UserData', JSON.stringify(inputs))
+    alert('Profile updated successfully')
+
+    window.location.href = "blog.html"
+
+  }
+
+
+
+    
+</script>
