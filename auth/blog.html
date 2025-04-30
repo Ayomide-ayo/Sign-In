@@ -215,7 +215,9 @@
       if (title.value.trim() === "" || description.value.trim() === "") {
         alert('Please input a value')
 
-      } else {
+      } else if (postB.find((post) => post.title === title.value.trim())){
+          alert('Blog already exist ')
+      }else {
         let allBlog = {
           title: title.value,
           description: description.value,
@@ -240,6 +242,7 @@
 
     function displayBlog(blog) {
       let preview = document.getElementById('display')
+
       preview.innerHTML = ''
       blog.forEach((blogs, i, arr) => {
         return preview.innerHTML += `<div>
@@ -248,7 +251,9 @@
          <img src="${blogs.image}" width="100" height="100" />     
           <button id="like-${i}">Like</button>    
           </div>`
-      })
+      }) // or for is liked use the tenary opertor inside the button 
+        //<button> ${blogs.liked ? 'Liked' : 'Not Liked'}</button>. Writing the tenary operator directly inside the display to avoid writing a long line of code 
+        // to add color you can use the span tag 
 
       blog.forEach((blogPost, i) => {
         let likedButton = document.getElementById(`like-${i}`)
@@ -304,8 +309,7 @@
       
 
     // }
-    console.log(displayBlog(postB), 'on line 134');
-    
+    console.log(displayBlog(postB), 'on line 307');
   
   // console.log(index);
   // console.log(inputs);
@@ -319,5 +323,5 @@
   // use input.file to grab your file. give us the value attributed to that input file 
   // add event listener is to add an event in javascript 
   // ASSIGNMENT - FINE CARD HERE AND YOU SHOULD BE ABLE TO POST THE PICTURE    
-
+  // additonal practice 
 </script>

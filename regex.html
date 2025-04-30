@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+</html>
+<script>
+  // regex are regular expression to validate a form. they are written with a backslash(aclosing and a opening backslash). when you want to write you regex , you create a variable and you write two backslash
+  // ^ means startswith in regex . should be the first thing inside your regex 
+  // i means case insentitve. do not mind the case 
+  // $ means endswith. ends with should be the last thing inside your regex  
+  // once you decide to use startswith and ends with in one you are creating a cage meaning the user has to use the same pattern 
+  // everything you are writing in regex is range and values. meaning ranges and quantity
+  // point of startswith and endswith just makesnsure you are sure about what you are looking for   
+  
+  let pattern1 = /^L$/ // its just bad syntax if you dont add startswith and endswith
+  let myString = 'Wow'
+
+  // regex uses .test() to find out if they are compatible amd it returns a boolean true or false 
+  console.log(pattern1.test(myString));
+
+  // W,D,S - they are symbols in regex 
+  // d- digits meaning you want a number from 0-9. when you want to add the d use a forward slash(\)
+  // \D - means non digit
+  // \w - any character except space or symbol. it just wants a word, it takes underscore as the only symbol(_) 
+  //\W - it takes anything else except a-z,0-9 and underscore 
+  // \s - means whitespace 
+  // \S - anything that is not whitespace  
+  // curly braces{} - is to identify quantity. y0u are working with quantity. adding comma inside your curly braces means you are tying to indicate the normal value and more  
+  // + - in regex, + means one or more 
+  // [] - can accept any variable. this is range 
+
+  let p = /^[^a-zA-Z0-9]{1,5}$/ // if the negation is the range it clearly means i dont want to see any letter and any number 
+  // regex does not need space  
+
+
+  // phone number regex 
+  // +2348164934974
+  let phoneNumberRegex = /^[+]234||0[7-9][0-1][0-9]{8}$/ // you can add different or(||) depending on the country you want 
+  phoneNumberRegex.text('09161137288')
+
+ 
+  let emailRegex = 
+
+
+
+  // ?=.* - means atleast one character
+  
+</script>
